@@ -40,7 +40,6 @@ public class CreateSuperU81{
 		var network = NetworkUtils.readNetwork("scenarios/input/duesseldorf-v1.7-network-with-pt.xml.gz");
 		var typeId = Id.create("Super81", VehicleType.class);
 		var vehicleType = scenario.getVehicles().getFactory().createVehicleType(typeId);
-		var transitSchedule = scenario.getTransitSchedule();
 		// vehicle settings
 		vehicleType.setNetworkMode(TransportMode.pt);
 		vehicleType.getCapacity().setStandingRoom(100);
@@ -51,15 +50,14 @@ public class CreateSuperU81{
 		scenario.getTransitVehicles().addVehicleType(vehicleType);
 
 		//start and end pt and add to network
-		var pt_start = network.getFactory().createNode(Id.createNodeId("81-start"), new Coord( 349449.09 + 100, 5685550.5 + 100));
-		;
+		var pt_start = network.getFactory().createNode(Id.createNodeId("81-start"), new Coord( 349449.09 + 100, 5685550.5 + 100));;
 		var pt_end = network.getFactory().createNode(Id.createNodeId("81-end"), new Coord(336566.87+100, 5675732.0200000005+100));
 		network.addNode(pt_start);
 		network.addNode(pt_end);
 		var fromNode = network.getNodes().get(Id.createNodeId("7926173979"));
 		var toNode = network.getNodes().get(Id.createNodeId("253117775"));
 
-		// pt link
+		// pt link for north-south
 		var start_link = createLink("u81_1", pt_start, fromNode);
 		var connecting_link = createLink("u81_2", fromNode, toNode);
 		var end_link = createLink("u81_3", toNode, pt_end);
@@ -86,7 +84,7 @@ public class CreateSuperU81{
 		var route = scheduleFactory.createTransitRoute(Id.create("u81_route_1", TransitRoute.class), networkRoute, List.of(stop1, stop2), "pt");
 
 		// create departures and vehicles for each departure
-		for (int i = 9 * 3600; i < 13 * 3600; i += 300) {
+		for (int i = 0 * 3600; i < 23 * 3600; i += 300) {
 			var departure = scheduleFactory.createDeparture(Id.create("departure_" + i, Departure.class), i);
 			var vehicle = scenario.getTransitVehicles().getFactory().createVehicle(Id.createVehicleId("super_u81_vehicle_" + i), vehicleType);
 			departure.setVehicleId(vehicle.getId());
@@ -96,7 +94,7 @@ public class CreateSuperU81{
 		}
 
 		// line
-		var line = scheduleFactory.createTransitLine(Id.create("shuttle", TransitLine.class));
+		var line = scheduleFactory.createTransitLine(Id.create("u81_n_s", TransitLine.class));
 		line.addRoute(route);
 		scenario.getTransitSchedule().addTransitLine(line);
 
