@@ -31,6 +31,8 @@ public class CreateSuperU81{
 	private static NetworkFactory networkFactory = NetworkUtils.createNetwork().getFactory();
 	private static TransitScheduleFactory scheduleFactory = ScenarioUtils.createScenario(ConfigUtils.createConfig()).getTransitSchedule().getFactory();
 
+
+
 	public static void main(String[] args) {
 
 		var root = Paths.get(".\\scenarios\\input");
@@ -41,6 +43,7 @@ public class CreateSuperU81{
 		var vehicleFile = Paths.get(".\\scenarios\\input\\duesseldorf-v1.7-transitVehicles.xml.gz");
 		new TransitScheduleReader(scenario).readFile(transitSchedule.toString());
 		var network = NetworkUtils.readNetwork(".\\scenarios\\input\\duesseldorf-v1.7-network-with-pt.xml.gz");
+
 		MatsimVehicleReader vehicleReader = new MatsimVehicleReader(scenario.getTransitVehicles());
 		vehicleReader.readFile(vehicleFile.toString());
 
@@ -61,58 +64,88 @@ public class CreateSuperU81{
 		var pt_end = network.getFactory().createNode(Id.createNodeId("81-end"), new Coord(336566.87+100, 5675732.0200000005+100));
 		network.addNode(pt_start);
 		network.addNode(pt_end);
-		var fromNode = network.getNodes().get(Id.createNodeId("7926173979"));
-		var toNode = network.getNodes().get(Id.createNodeId("253117775"));
+		var RatingenWest = network.getNodes().get(Id.createNodeId("7926173979"));
+		var NeussRheinparkcenter = network.getNodes().get(Id.createNodeId("253117775"));
+		var Freiligrathplatz  = network.getNodes().get(Id.createNodeId("pt_de:05111:18028:2:7"));
+		var DLoerick = network.getNodes().get(Id.createNodeId("25938824"));
+
 
 		// pt link n > s
-		var start_link_n_s = createLink("u81_1_ns", pt_start,fromNode);
-		var connecting_link_n_s = createLink("u81_2_ns", fromNode,toNode);
-		var end_link_n_s = createLink("u81_3_ns", toNode, pt_end);
-		network.addLink(connecting_link_n_s);
+		var start_link_n_s = createLink("u81_1_ns", pt_start,RatingenWest);
+		var connecting_link_n_s_1 = createLink("u81_2_ns", RatingenWest,Freiligrathplatz);
+		var connecting_link_n_s_2 = createLink("u81_3_ns", Freiligrathplatz, DLoerick);
+		var connecting_link_n_s_3 = createLink("u81_4_ns", DLoerick,NeussRheinparkcenter);
+		var end_link_n_s = createLink("u81_5_ns", NeussRheinparkcenter, pt_end);
+		network.addLink(connecting_link_n_s_1);
+		network.addLink(connecting_link_n_s_2);
+		network.addLink(connecting_link_n_s_3);
 		network.addLink(start_link_n_s);
 		network.addLink(end_link_n_s);
 
-		// pt link n > s
-		var start_link_s_n = createLink("u81_1_sn", pt_end,toNode);
-		var connecting_link_s_n = createLink("u81_2_sn", toNode, fromNode);
-		var end_link_s_n = createLink("u81_3_sn", fromNode, pt_start);
+		// pt link s > n
+		var route = List.of();
+		var start_link_s_n = createLink("u81_1_sn", pt_end,NeussRheinparkcenter);
+		var connecting_link_s_n = createLink("u81_2_sn", NeussRheinparkcenter, DLoerick);
+		var connecting_link_s_n_1 = createLink("u81_3_sn", DLoerick, Freiligrathplatz);
+		var connecting_link_s_n_2 = createLink("u81_4_sn", Freiligrathplatz,RatingenWest);
+		var end_link_s_n = createLink("u81_5_sn", RatingenWest, pt_start);
 		network.addLink(connecting_link_s_n);
+		network.addLink(connecting_link_s_n_1);
+		network.addLink(connecting_link_s_n_2);
 		network.addLink(start_link_s_n);
 		network.addLink(end_link_s_n);
 
+
 		// network route n > s and s > n
-		NetworkRoute networkRoute_n_s = RouteUtils.createLinkNetworkRouteImpl(start_link_n_s.getId(), List.of(connecting_link_n_s.getId()), end_link_n_s.getId());
-		NetworkRoute networkRoute_s_n = RouteUtils.createLinkNetworkRouteImpl(start_link_s_n.getId(), List.of(connecting_link_s_n.getId()), end_link_s_n.getId());
+		NetworkRoute networkRoute_n_s = RouteUtils.createLinkNetworkRouteImpl(start_link_n_s.getId(),
+				List.of(connecting_link_n_s_1.getId(),connecting_link_n_s_2.getId(),connecting_link_n_s_3.getId()), end_link_n_s.getId());
+		NetworkRoute networkRoute_s_n = RouteUtils.createLinkNetworkRouteImpl(start_link_s_n.getId(),
+				List.of(connecting_link_s_n.getId(),connecting_link_s_n_1.getId(),connecting_link_s_n_2.getId()), end_link_s_n.getId());
 
 
 		// facilities n > s
 		var stop1_facility_n_s = scheduleFactory.createTransitStopFacility(Id.create("stop_1_ns", TransitStopFacility.class),pt_start.getCoord(),false);
-		var stop2_facility_n_s = scheduleFactory.createTransitStopFacility(Id.create("stop_2_ns",TransitStopFacility.class), pt_end.getCoord(),false);
+		var stop2_facility_n_s = scheduleFactory.createTransitStopFacility(Id.create("stop_2_ns",TransitStopFacility.class), Freiligrathplatz.getCoord(),false);
+		var stop3_facility_n_s = scheduleFactory.createTransitStopFacility(Id.create("stop_3_ns", TransitStopFacility.class),DLoerick.getCoord(),false);
+		var stop4_facility_n_s = scheduleFactory.createTransitStopFacility(Id.create("stop_4_ns",TransitStopFacility.class), pt_end.getCoord(),false);
 		stop1_facility_n_s.setLinkId(start_link_n_s.getId());
-		stop2_facility_n_s.setLinkId(end_link_n_s.getId());
+		stop2_facility_n_s.setLinkId(connecting_link_n_s_1.getId());
+		stop3_facility_n_s.setLinkId(connecting_link_n_s_2.getId());
+		stop4_facility_n_s.setLinkId(end_link_n_s.getId());
 		scenario.getTransitSchedule().addStopFacility(stop1_facility_n_s);
 		scenario.getTransitSchedule().addStopFacility(stop2_facility_n_s);
+		scenario.getTransitSchedule().addStopFacility(stop3_facility_n_s);
+		scenario.getTransitSchedule().addStopFacility(stop4_facility_n_s);
 
 		// facilities s > n
 		var stop1_facility_s_n = scheduleFactory.createTransitStopFacility(Id.create("stop_1_sn", TransitStopFacility.class),pt_start.getCoord(),false);
-		var stop2_facility_s_n = scheduleFactory.createTransitStopFacility(Id.create("stop_2_sn",TransitStopFacility.class), pt_end.getCoord(),false);
+		var stop2_facility_s_n = scheduleFactory.createTransitStopFacility(Id.create("stop_2_sn", TransitStopFacility.class),DLoerick.getCoord(),false);
+		var stop3_facility_s_n = scheduleFactory.createTransitStopFacility(Id.create("stop_3_sn", TransitStopFacility.class),Freiligrathplatz.getCoord(),false);
+		var stop4_facility_s_n = scheduleFactory.createTransitStopFacility(Id.create("stop_4_sn",TransitStopFacility.class), pt_end.getCoord(),false);
 		stop1_facility_s_n.setLinkId(start_link_s_n.getId());
-		stop2_facility_s_n.setLinkId(end_link_s_n.getId());
+		stop2_facility_s_n.setLinkId(connecting_link_s_n.getId());
+		stop3_facility_s_n.setLinkId(connecting_link_s_n_1.getId());
+		stop4_facility_s_n.setLinkId(end_link_s_n.getId());
 		scenario.getTransitSchedule().addStopFacility(stop1_facility_s_n);
 		scenario.getTransitSchedule().addStopFacility(stop2_facility_s_n);
+		scenario.getTransitSchedule().addStopFacility(stop3_facility_s_n);
+		scenario.getTransitSchedule().addStopFacility(stop4_facility_s_n);
 
 		// stations s > n
 		var stop1_n_s = scheduleFactory.createTransitRouteStop(stop1_facility_n_s,0,0); //why 0,0?
-		var stop2_n_s = scheduleFactory.createTransitRouteStop(stop2_facility_n_s,3600,3610);
+		var stop2_n_s = scheduleFactory.createTransitRouteStop(stop2_facility_n_s,1200,1210);
+		var stop3_n_s = scheduleFactory.createTransitRouteStop(stop3_facility_n_s,2400,2410); //why 0,0?
+		var stop4_n_s = scheduleFactory.createTransitRouteStop(stop4_facility_n_s,3600,3610);
 
 		// stations N > S
 		var stop1_s_n = scheduleFactory.createTransitRouteStop(stop1_facility_s_n,0,0); //why 0,0?
-		var stop2_s_n = scheduleFactory.createTransitRouteStop(stop2_facility_s_n,3600,3610);
+		var stop2_s_n = scheduleFactory.createTransitRouteStop(stop2_facility_s_n,1200,1210);
+		var stop3_s_n = scheduleFactory.createTransitRouteStop(stop3_facility_s_n,2400,2410); //why 0,0?
+		var stop4_s_n = scheduleFactory.createTransitRouteStop(stop4_facility_s_n,3600,3610);
 
 		//route
-		var route_n_s = scheduleFactory.createTransitRoute(Id.create("route_1_ns", TransitRoute.class),networkRoute_n_s,List.of(stop1_n_s,stop2_n_s),"pt");
-		var route_s_n = scheduleFactory.createTransitRoute(Id.create("route_1_sn", TransitRoute.class),networkRoute_s_n,List.of(stop1_s_n,stop2_s_n),"pt");
-
+		var route_n_s = scheduleFactory.createTransitRoute(Id.create("route_1_ns", TransitRoute.class),networkRoute_n_s,List.of(stop1_n_s,stop2_n_s,stop3_n_s,stop4_n_s),"pt");
+		var route_s_n = scheduleFactory.createTransitRoute(Id.create("route_1_sn", TransitRoute.class),networkRoute_s_n,List.of(stop1_s_n,stop2_s_n,stop3_s_n,stop4_s_n),"pt");
 
 		// create departures and vehicles for each departure N > S
 		for (int i = 0 * 3600; i < 24 * 3600; i += 300) {
@@ -150,7 +183,6 @@ public class CreateSuperU81{
 
 
 	}
-
 	private static Link createLink(String id, Node from, Node to) {
 
 		var connection = networkFactory.createLink(Id.createLinkId(id), from, to);
@@ -159,6 +191,7 @@ public class CreateSuperU81{
 		connection.setCapacity(10000);
 		return connection;
 	}
+
 
 
 }
