@@ -105,17 +105,55 @@ public class CreateSuperU81{
 
 		// facilities n > s
 		var stop1_facility_n_s = scheduleFactory.createTransitStopFacility(Id.create("stop_1_ns", TransitStopFacility.class),pt_start.getCoord(),false);
-		var stop2_facility_n_s = scheduleFactory.createTransitStopFacility(Id.create("stop_2_ns",TransitStopFacility.class), Freiligrathplatz.getCoord(),false);
-		var stop3_facility_n_s = scheduleFactory.createTransitStopFacility(Id.create("stop_3_ns", TransitStopFacility.class),DLoerick.getCoord(),false);
-		var stop4_facility_n_s = scheduleFactory.createTransitStopFacility(Id.create("stop_4_ns",TransitStopFacility.class), pt_end.getCoord(),false);
+		var stop2_facility_n_s = scheduleFactory.createTransitStopFacility(Id.create("stop_2_ns", TransitStopFacility.class),Wasserwerk.getCoord(),false);
+		var stop3_facility_n_s = scheduleFactory.createTransitStopFacility(Id.create("stop_3_ns", TransitStopFacility.class),ImRott.getCoord(),false);
+		var stop4_facility_n_s = scheduleFactory.createTransitStopFacility(Id.create("stop_4_ns", TransitStopFacility.class),BDFlughafen.getCoord(),false);
+		var stop5_facility_n_s = scheduleFactory.createTransitStopFacility(Id.create("stop_5_ns", TransitStopFacility.class),DFTerminal.getCoord(),false);
+		var stop6_facility_n_s = scheduleFactory.createTransitStopFacility(Id.create("stop_6_ns",TransitStopFacility.class), Freiligrathplatz.getCoord(),false);
+		var stop7_facility_n_s = scheduleFactory.createTransitStopFacility(Id.create("stop_7_ns", TransitStopFacility.class),Moerikestr.getCoord(),false);
+		var stop8_facility_n_s = scheduleFactory.createTransitStopFacility(Id.create("stop_8_ns", TransitStopFacility.class),MSAMesseNord.getCoord(),false);
+		var stop9_facility_n_s = scheduleFactory.createTransitStopFacility(Id.create("stop_9_ns", TransitStopFacility.class),DLoerick.getCoord(),false);
+		var stop10_facility_n_s = scheduleFactory.createTransitStopFacility(Id.create("stop_10_ns", TransitStopFacility.class),WillstaetterStr.getCoord(),false);
+		var stop11_facility_n_s = scheduleFactory.createTransitStopFacility(Id.create("stop_11_ns", TransitStopFacility.class),ZuelpicherStr.getCoord(),false);
+		var stop12_facility_n_s = scheduleFactory.createTransitStopFacility(Id.create("stop_12_ns", TransitStopFacility.class),DVogesenstr.getCoord(),false);
+		var stop13_facility_n_s = scheduleFactory.createTransitStopFacility(Id.create("stop_13_ns", TransitStopFacility.class),NAmKaiser.getCoord(),false);
+		var stop14_facility_n_s = scheduleFactory.createTransitStopFacility(Id.create("stop_14_ns", TransitStopFacility.class),BluecherStr.getCoord(),false);
+		var stop15_facility_n_s = scheduleFactory.createTransitStopFacility(Id.create("stop_15_ns", TransitStopFacility.class),Rheintorstr.getCoord(),false);
+		var stop16_facility_n_s = scheduleFactory.createTransitStopFacility(Id.create("stop_16_ns", TransitStopFacility.class),Hafenstr.getCoord(),false);
+		var stop17_facility_n_s = scheduleFactory.createTransitStopFacility(Id.create("stop_17_ns", TransitStopFacility.class),NBusbahnhof.getCoord(),false);
+		var stop18_facility_n_s = scheduleFactory.createTransitStopFacility(Id.create("stop_18_ns", TransitStopFacility.class),Stadthalle.getCoord(),false);
+		var stop19_facility_n_s = scheduleFactory.createTransitStopFacility(Id.create("stop_19_ns", TransitStopFacility.class),AlexianerPlatz.getCoord(),false);
+		var stop20_facility_n_s = scheduleFactory.createTransitStopFacility(Id.create("stop_20_ns", TransitStopFacility.class),Hammfelddamm.getCoord(),false);
+		var stop21_facility_n_s = scheduleFactory.createTransitStopFacility(Id.create("stop_21_ns", TransitStopFacility.class),Langemarkstr.getCoord(),false);
+		var stop22_facility_n_s = scheduleFactory.createTransitStopFacility(Id.create("stop_22_ns", TransitStopFacility.class),KoenigsbergerStr.getCoord(),false);
+		var stop23_facility_n_s = scheduleFactory.createTransitStopFacility(Id.create("stop_23_ns",TransitStopFacility.class), pt_end.getCoord(),false);
 		stop1_facility_n_s.setLinkId(start_link_n_s.getId());
-		stop2_facility_n_s.setLinkId(connecting_link_n_s_1.getId());
-		stop3_facility_n_s.setLinkId(connecting_link_n_s_2.getId());
-		stop4_facility_n_s.setLinkId(end_link_n_s.getId());
+		stop6_facility_n_s.setLinkId(connecting_link_n_s_1.getId());
+		stop9_facility_n_s.setLinkId(connecting_link_n_s_2.getId());
+		stop23_facility_n_s.setLinkId(end_link_n_s.getId());
 		scenario.getTransitSchedule().addStopFacility(stop1_facility_n_s);
 		scenario.getTransitSchedule().addStopFacility(stop2_facility_n_s);
 		scenario.getTransitSchedule().addStopFacility(stop3_facility_n_s);
 		scenario.getTransitSchedule().addStopFacility(stop4_facility_n_s);
+		scenario.getTransitSchedule().addStopFacility(stop5_facility_n_s);
+		scenario.getTransitSchedule().addStopFacility(stop6_facility_n_s);
+		scenario.getTransitSchedule().addStopFacility(stop7_facility_n_s);
+		scenario.getTransitSchedule().addStopFacility(stop8_facility_n_s);
+		scenario.getTransitSchedule().addStopFacility(stop9_facility_n_s);
+		scenario.getTransitSchedule().addStopFacility(stop10_facility_n_s);
+		scenario.getTransitSchedule().addStopFacility(stop11_facility_n_s);
+		scenario.getTransitSchedule().addStopFacility(stop12_facility_n_s);
+		scenario.getTransitSchedule().addStopFacility(stop13_facility_n_s);
+		scenario.getTransitSchedule().addStopFacility(stop14_facility_n_s);
+		scenario.getTransitSchedule().addStopFacility(stop15_facility_n_s);
+		scenario.getTransitSchedule().addStopFacility(stop16_facility_n_s);
+		scenario.getTransitSchedule().addStopFacility(stop17_facility_n_s);
+		scenario.getTransitSchedule().addStopFacility(stop18_facility_n_s);
+		scenario.getTransitSchedule().addStopFacility(stop19_facility_n_s);
+		scenario.getTransitSchedule().addStopFacility(stop20_facility_n_s);
+		scenario.getTransitSchedule().addStopFacility(stop21_facility_n_s);
+		scenario.getTransitSchedule().addStopFacility(stop22_facility_n_s);
+		scenario.getTransitSchedule().addStopFacility(stop23_facility_n_s);
 
 		// facilities s > n
 		var stop1_facility_s_n = scheduleFactory.createTransitStopFacility(Id.create("stop_1_sn", TransitStopFacility.class),pt_start.getCoord(),false);
@@ -137,7 +175,7 @@ public class CreateSuperU81{
 		var stop3_n_s = scheduleFactory.createTransitRouteStop(stop3_facility_n_s,2400,2410); //why 0,0?
 		var stop4_n_s = scheduleFactory.createTransitRouteStop(stop4_facility_n_s,3600,3610);
 
-		// stations N > S
+		// stations n > s
 		var stop1_s_n = scheduleFactory.createTransitRouteStop(stop1_facility_s_n,0,0); //why 0,0?
 		var stop2_s_n = scheduleFactory.createTransitRouteStop(stop2_facility_s_n,1200,1210);
 		var stop3_s_n = scheduleFactory.createTransitRouteStop(stop3_facility_s_n,2400,2410); //why 0,0?
