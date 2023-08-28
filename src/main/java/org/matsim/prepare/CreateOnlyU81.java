@@ -16,13 +16,15 @@ import org.matsim.core.population.routes.NetworkRoute;
 import org.matsim.core.population.routes.RouteUtils;
 import org.matsim.core.scenario.ScenarioUtils;
 import org.matsim.pt.transitSchedule.api.*;
-import org.matsim.vehicles.*;
+import org.matsim.vehicles.MatsimVehicleReader;
+import org.matsim.vehicles.MatsimVehicleWriter;
+import org.matsim.vehicles.VehicleType;
 
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Set;
 
-public class CreateFastU81 {
+public class CreateOnlyU81 {
 
 	private static LinkNetworkRouteFactory routeFactory = new LinkNetworkRouteFactory();
 	private static NetworkFactory networkFactory = NetworkUtils.createNetwork().getFactory();
@@ -36,13 +38,14 @@ public class CreateFastU81 {
 		var scenario = ScenarioUtils.createScenario(ConfigUtils.createConfig());
 
 		// read in existing files
-		var transitSchedule = Paths.get(".\\scenarios\\input\\duesseldorf-v1.7-transitSchedule.xml.gz");
-		var vehicleFile = Paths.get(".\\scenarios\\input\\duesseldorf-v1.7-transitVehicles.xml.gz");
-		new TransitScheduleReader(scenario).readFile(transitSchedule.toString());
+		// var transitSchedule = Paths.get(".\\scenarios\\input\\duesseldorf-v1.7-transitSchedule.xml.gz");
+		//var transitSchedule = scenario.getTransitSchedule();
+		//var vehicleFile = Paths.get(".\\scenarios\\input\\duesseldorf-v1.7-transitVehicles.xml.gz");
+		//new TransitScheduleReader(scenario).readFile(transitSchedule.toString());
 		var network = NetworkUtils.readNetwork(".\\scenarios\\input\\duesseldorf-v1.7-network-with-pt.xml.gz");
 
-		MatsimVehicleReader vehicleReader = new MatsimVehicleReader(scenario.getTransitVehicles());
-		vehicleReader.readFile(vehicleFile.toString());
+		//MatsimVehicleReader vehicleReader = new MatsimVehicleReader(scenario.getTransitVehicles());
+		//vehicleReader.readFile(vehicleFile.toString());
 
 		// vehicle types
 		var typeId = Id.create("Super81", VehicleType.class);
@@ -449,9 +452,9 @@ public class CreateFastU81 {
 		line_s_n.addRoute(route_s_n);
 		scenario.getTransitSchedule().addTransitLine(line_s_n);
 
-		new NetworkWriter(network).write(root.resolve("network-with-fastU81.xml.gz").toString());
-		new TransitScheduleWriter(scenario.getTransitSchedule()).writeFile(root.resolve("transit-Schedule-fastU81.xml.gz").toString());
-		new MatsimVehicleWriter(scenario.getTransitVehicles()).writeFile(root.resolve("transit-vehicles-fastU81.xml.gz").toString());
+		new NetworkWriter(network).write(root.resolve("network-with-onlyU81.xml.gz").toString());
+		new TransitScheduleWriter(scenario.getTransitSchedule()).writeFile(root.resolve("transit-Schedule-onlyU81.xml.gz").toString());
+		new MatsimVehicleWriter(scenario.getTransitVehicles()).writeFile(root.resolve("transit-vehicles-onlyU81.xml.gz").toString());
 
 
 	}
