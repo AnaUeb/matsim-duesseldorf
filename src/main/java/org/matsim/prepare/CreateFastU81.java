@@ -45,7 +45,7 @@ public class CreateFastU81 {
 		vehicleReader.readFile(vehicleFile.toString());
 
 		// vehicle types
-		var typeId = Id.create("Super81", VehicleType.class);
+		var typeId = Id.create("Fast81", VehicleType.class);
 		var vehicleType = scenario.getVehicles().getFactory().createVehicleType(typeId);
 		// vehicle settings
 		vehicleType.setNetworkMode(TransportMode.pt);
@@ -58,7 +58,7 @@ public class CreateFastU81 {
 
 		//start and end pt and add to network
 		var pt_start = network.getFactory().createNode(Id.createNodeId("81-start"), new Coord( 349449.09 + 100, 5685550.5 + 100));
-		var pt_end = network.getFactory().createNode(Id.createNodeId("81-end"), new Coord(336566.87+100, 5675732.0200000005+100));
+		var pt_end = network.getFactory().createNode(Id.createNodeId("81-end"), new Coord(342235.96875+100, 567574.5+100));
 		network.addNode(pt_start);
 		network.addNode(pt_end);
 		var RatingenWest = network.getNodes().get(Id.createNodeId("7926173979"));
@@ -84,7 +84,7 @@ public class CreateFastU81 {
 		var Hammfelddamm = network.getNodes().get(Id.createNodeId("pt_de:05162:20114:1:1"));
 		var Langemarkstr = network.getNodes().get(Id.createNodeId("pt_de:05162:20183:1:2"));
 		var KoenigsbergerStr = network.getNodes().get(Id.createNodeId("2312184760"));
-		var NeussRheinparkcenter = network.getNodes().get(Id.createNodeId("253117775"));
+		var NeussRheinparkcenter = network.getNodes().get(Id.createNodeId("pt_de:05162:20496:2:2"));
 
 
 		// pt link n > s
