@@ -58,7 +58,7 @@ public class CreateFastU81 {
 
 		//start and end pt and add to network
 		var pt_start = network.getFactory().createNode(Id.createNodeId("81-start"), new Coord( 349449.09 + 100, 5685550.5 + 100));
-		var pt_end = network.getFactory().createNode(Id.createNodeId("81-end"), new Coord(342235.96875+100, 567574.5+100));
+		var pt_end = network.getFactory().createNode(Id.createNodeId("81-end"), new Coord(340525.2445510996 +100, 5675205.779733454 +100));
 		network.addNode(pt_start);
 		network.addNode(pt_end);
 		var RatingenWest = network.getNodes().get(Id.createNodeId("7926173979"));
