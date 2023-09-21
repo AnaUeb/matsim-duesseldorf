@@ -47,16 +47,16 @@ public class CreateU81 {
 		vehicleReader.readFile(vehicleFile.toString());
 
 		// vehicle types
-		var typeId = Id.create("Super81", VehicleType.class);
-		var vehicleType = scenario.getVehicles().getFactory().createVehicleType(typeId);
-		//var vehicleType1 = scenario.getTransitVehicles();
+		//var typeId = Id.create("Super81", VehicleType.class);
+		//var vehicleType1 = scenario.getVehicles().getFactory().createVehicleType(typeId);
+		var vehicleType = scenario.getTransitVehicles().getVehicleTypes().get(Id.create("U-Bahn_veh_type",VehicleType.class));
 		// vehicle settings
-		vehicleType.setNetworkMode(TransportMode.pt);
-		vehicleType.getCapacity().setStandingRoom(600);
-		vehicleType.getCapacity().setSeats(300);
+		//vehicleType.setNetworkMode(TransportMode.pt);
+		//vehicleType.getCapacity().setStandingRoom(600);
+		//vehicleType.getCapacity().setSeats(300);
 		//vehicleType.setMaximumVelocity(36);
 		// add vehicle to scenario
-		scenario.getTransitVehicles().addVehicleType(vehicleType);
+		//scenario.getTransitVehicles().addVehicleType(vehicleType);
 
 		//start and end pt and add to network
 		var pt_start = network.getFactory().createNode(Id.createNodeId("81-start"), new Coord( 349449.09 + 100, 5685550.5 + 100));
@@ -422,7 +422,7 @@ public class CreateU81 {
 						stop17_s_n,stop18_s_n,stop19_s_n,stop20_s_n,stop21_s_n,stop22_s_n,stop23_s_n,stop24_s_n),"pt");
 
 		// create departures and vehicles for each departure N > S
-		for (int i = 0 * 3600; i < 24 * 3600; i += 300) {
+		for (int i = 3 * 3600; i < 24 * 3600; i += 1200) {
 			var departure = scheduleFactory.createDeparture(Id.create("departure_" + i, Departure.class), i);
 			var vehicle = scenario.getTransitVehicles().getFactory().createVehicle(Id.createVehicleId("U81_vehicle_ns_" + "100"+i), vehicleType);
 			departure.setVehicleId(vehicle.getId());
@@ -432,7 +432,7 @@ public class CreateU81 {
 		}
 
 		// create departures and vehicles for each departure S > N
-		for (int i = 0 * 3600; i < 24 * 3600; i += 300) {
+		for (int i = 3 * 3600; i < 24 * 3600; i += 1200) {
 			var departure = scheduleFactory.createDeparture(Id.create("departure_" + i, Departure.class), i);
 			var vehicle = scenario.getTransitVehicles().getFactory().createVehicle(Id.createVehicleId("U81_vehicle_sn_"+"100" + i), vehicleType);
 			departure.setVehicleId(vehicle.getId());
@@ -451,9 +451,9 @@ public class CreateU81 {
 		line_s_n.addRoute(route_s_n);
 		scenario.getTransitSchedule().addTransitLine(line_s_n);
 
-		new NetworkWriter(network).write(root.resolve("network-with-U81-5min.xml.gz").toString());
-		new TransitScheduleWriter(scenario.getTransitSchedule()).writeFile(root.resolve("transit-Schedule-U81-5min.xml.gz").toString());
-		new MatsimVehicleWriter(scenario.getTransitVehicles()).writeFile(root.resolve("transit-vehicles-U81-5min.xml.gz").toString());
+		new NetworkWriter(network).write(root.resolve("network-with-U81-20min.xml.gz").toString());
+		new TransitScheduleWriter(scenario.getTransitSchedule()).writeFile(root.resolve("transit-Schedule-U81-20min.xml.gz").toString());
+		new MatsimVehicleWriter(scenario.getTransitVehicles()).writeFile(root.resolve("transit-vehicles-U81-20min.xml.gz").toString());
 
 
 	}
