@@ -358,7 +358,7 @@ public class CreateU81Minus10Stations {
 		scenario.getTransitSchedule().addStopFacility(stop23_facility_s_n);
 		scenario.getTransitSchedule().addStopFacility(stop24_facility_s_n);
 
-		// stations s > n
+		// stations n > s
 		var stop1_n_s=scheduleFactory.createTransitRouteStop(stop1_facility_n_s,0,0);
 		var stop2_n_s=scheduleFactory.createTransitRouteStop(stop2_facility_n_s,60,75);
 		var stop3_n_s=scheduleFactory.createTransitRouteStop(stop3_facility_n_s,155,170);
@@ -385,7 +385,7 @@ public class CreateU81Minus10Stations {
 		var stop24_n_s=scheduleFactory.createTransitRouteStop(stop24_facility_n_s,2110,2140);
 
 
-		// stations n > s
+		// stations s > n
 		var stop1_s_n=scheduleFactory.createTransitRouteStop(stop1_facility_s_n,0,0);
 		/*var stop2_s_n=scheduleFactory.createTransitRouteStop(stop2_facility_s_n,50,65);*/
 		/*var stop3_s_n=scheduleFactory.createTransitRouteStop(stop3_facility_s_n,145,160);*/
@@ -422,7 +422,7 @@ public class CreateU81Minus10Stations {
 						stop17_s_n,stop18_s_n*/,stop19_s_n,stop20_s_n,stop21_s_n,stop22_s_n,stop23_s_n,stop24_s_n),"pt");
 
 		// create departures and vehicles for each departure N > S
-		for (int i = 0 * 3600; i < 24 * 3600; i += 300) {
+		for (int i = 0 * 3600; i < 24 * 3600; i += 1200) {
 			var departure = scheduleFactory.createDeparture(Id.create("departure_" + i, Departure.class), i);
 			var vehicle = scenario.getTransitVehicles().getFactory().createVehicle(Id.createVehicleId("U81_vehicle_ns_" + "100"+i), vehicleType);
 			departure.setVehicleId(vehicle.getId());
@@ -432,7 +432,7 @@ public class CreateU81Minus10Stations {
 		}
 
 		// create departures and vehicles for each departure S > N
-		for (int i = 0 * 3600; i < 24 * 3600; i += 300) {
+		for (int i = 0 * 3600; i < 24 * 3600; i += 1200) {
 			var departure = scheduleFactory.createDeparture(Id.create("departure_" + i, Departure.class), i);
 			var vehicle = scenario.getTransitVehicles().getFactory().createVehicle(Id.createVehicleId("U81_vehicle_sn_"+"100" + i), vehicleType);
 			departure.setVehicleId(vehicle.getId());
@@ -451,9 +451,9 @@ public class CreateU81Minus10Stations {
 		line_s_n.addRoute(route_s_n);
 		scenario.getTransitSchedule().addTransitLine(line_s_n);
 
-		new NetworkWriter(network).write(root.resolve("network-with-U81Minus10Stations-5min.xml.gz").toString());
-		new TransitScheduleWriter(scenario.getTransitSchedule()).writeFile(root.resolve("transit-Schedule-U81Minus10Stations-5min.xml.gz").toString());
-		new MatsimVehicleWriter(scenario.getTransitVehicles()).writeFile(root.resolve("transit-vehicles-U81Minus10Stations-5min.xml.gz").toString());
+		new NetworkWriter(network).write(root.resolve("network-with-U81Minus10Stations-20min.xml.gz").toString());
+		new TransitScheduleWriter(scenario.getTransitSchedule()).writeFile(root.resolve("transit-Schedule-U81Minus10Stations-20min.xml.gz").toString());
+		new MatsimVehicleWriter(scenario.getTransitVehicles()).writeFile(root.resolve("transit-vehicles-U81Minus10Stations-20min.xml.gz").toString());
 
 
 	}

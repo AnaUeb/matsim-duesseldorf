@@ -358,7 +358,7 @@ public class CreateU81 {
 		scenario.getTransitSchedule().addStopFacility(stop23_facility_s_n);
 		scenario.getTransitSchedule().addStopFacility(stop24_facility_s_n);
 
-		// stations s > n
+		// stations n > s
 		var stop1_n_s=scheduleFactory.createTransitRouteStop(stop1_facility_n_s,0,0);
 		var stop2_n_s=scheduleFactory.createTransitRouteStop(stop2_facility_n_s,60,75);
 		var stop3_n_s=scheduleFactory.createTransitRouteStop(stop3_facility_n_s,155,170);
@@ -385,7 +385,7 @@ public class CreateU81 {
 		var stop24_n_s=scheduleFactory.createTransitRouteStop(stop24_facility_n_s,2393,2423);
 
 
-		// stations n > s
+		// stations s > n
 		var stop1_s_n=scheduleFactory.createTransitRouteStop(stop1_facility_s_n,0,0);
 		var stop2_s_n=scheduleFactory.createTransitRouteStop(stop2_facility_s_n,50,65);
 		var stop3_s_n=scheduleFactory.createTransitRouteStop(stop3_facility_s_n,145,160);
